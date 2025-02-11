@@ -167,6 +167,7 @@
 .registration-form {
   display: flex;
   flex-direction: column;
+  width: 384px;
 }
 
 .input-wrapper {

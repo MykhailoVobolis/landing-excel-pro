@@ -1,0 +1,11 @@
+.header {
+  position: absolute;
+  z-index: 1000;
+  background-color: transparent;
+  padding: 40px 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}

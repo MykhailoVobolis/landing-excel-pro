@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('active');
   });
 
-  // Закриття модального вікна при кліку поза ним
   modal.addEventListener('click', e => {
     if (e.target === modal) {
       modal.classList.remove('active');

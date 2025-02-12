@@ -1,42 +1,62 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const dayScoreboard = document.querySelector('[data-days]');
-  const hourScoreboard = document.querySelector('[data-hours]');
-  const minuteScoreboard = document.querySelector('[data-minutes]');
-  const secondScoreboard = document.querySelector('[data-seconds]');
+const dayScoreboard = document.querySelector('[data-days]');
+const hourScoreboard = document.querySelector('[data-hours]');
+const minuteScoreboard = document.querySelector('[data-minutes]');
+const secondScoreboard = document.querySelector('[data-seconds]');
 
-  const userSelectedDate = new Date('2025-03-01T00:00:00').getTime();
+const modalDayScoreboard = document.querySelector('.modal [data-days]');
+const modalHourScoreboard = document.querySelector('.modal [data-hours]');
+const modalMinuteScoreboard = document.querySelector('.modal [data-minutes]');
+const modalSecondScoreboard = document.querySelector('.modal [data-seconds]');
 
-  function startTimer() {
-    const intervalTime = setInterval(() => {
-      const now = Date.now();
-      const ms = userSelectedDate - now;
+const userSelectedDate = new Date('2025-03-01T00:00:00').getTime();
+let intervalTime;
 
-      if (ms <= 0) {
-        clearInterval(intervalTime);
-        updateTimer(0, 0, 0, 0);
-        return;
-      }
+function startTimer() {
+  intervalTime = setInterval(() => {
+    const now = Date.now();
+    const ms = userSelectedDate - now;
 
-      const second = 1000;
-      const minute = second * 60;
-      const hour = minute * 60;
-      const day = hour * 24;
+    if (ms <= 0) {
+      clearInterval(intervalTime);
+      updateTimer(0, 0, 0, 0);
+      return;
+    }
 
-      const days = Math.floor(ms / day);
-      const hours = Math.floor((ms % day) / hour);
-      const minutes = Math.floor(((ms % day) % hour) / minute);
-      const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
 
-      updateTimer(days, hours, minutes, seconds);
-    }, 1000);
+    const days = Math.floor(ms / day);
+    const hours = Math.floor((ms % day) / hour);
+    const minutes = Math.floor(((ms % day) % hour) / minute);
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+    updateTimer(days, hours, minutes, seconds);
+  }, 1000);
+}
+
+// Оновлюємо таймер в обох місцях
+function updateTimer(days, hours, minutes, seconds) {
+  // Оновлення на основній сторінці
+  dayScoreboard.textContent = String(days).padStart(2, '0');
+  hourScoreboard.textContent = String(hours).padStart(2, '0');
+  minuteScoreboard.textContent = String(minutes).padStart(2, '0');
+  secondScoreboard.textContent = String(seconds).padStart(2, '0');
+
+  // Оновлення в модалці
+  if (
+    modalDayScoreboard &&
+    modalHourScoreboard &&
+    modalMinuteScoreboard &&
+    modalSecondScoreboard
+  ) {
+    modalDayScoreboard.textContent = String(days).padStart(2, '0');
+    modalHourScoreboard.textContent = String(hours).padStart(2, '0');
+    modalMinuteScoreboard.textContent = String(minutes).padStart(2, '0');
+    modalSecondScoreboard.textContent = String(seconds).padStart(2, '0');
   }
+}
 
-  function updateTimer(days, hours, minutes, seconds) {
-    dayScoreboard.textContent = String(days).padStart(2, '0');
-    hourScoreboard.textContent = String(hours).padStart(2, '0');
-    minuteScoreboard.textContent = String(minutes).padStart(2, '0');
-    secondScoreboard.textContent = String(seconds).padStart(2, '0');
-  }
-
-  startTimer();
-});
+// Запуск таймера на сторінці
+startTimer();

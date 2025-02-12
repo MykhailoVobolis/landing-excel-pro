@@ -1,20 +1,22 @@
-// const modal = document.querySelector('.modal');
-// const openModalBtn = document.querySelector('.registration-toggle-btn');
-// const closeModalBtn = document.querySelector('.modal-close-btn');
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.querySelector('.modal-overlay');
+  const openBtn = document.querySelector('.registration-toggle-btn');
+  const closeBtn = document.querySelector('.close-modal');
 
-// // Відкрити модалку
-// openModalBtn.addEventListener('click', () => {
-//   modal.classList.remove('hidden');
-// });
+  openBtn.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      modal.classList.add('active');
+    }
+  });
 
-// // Закрити модалку при кліку на кнопку
-// closeModalBtn.addEventListener('click', () => {
-//   modal.classList.add('hidden');
-// });
+  closeBtn.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
 
-// // Закрити при кліку поза контентом
-// modal.addEventListener('click', event => {
-//   if (event.target === modal) {
-//     modal.classList.add('hidden');
-//   }
-// });
+  // Закриття модального вікна при кліку поза ним
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+});

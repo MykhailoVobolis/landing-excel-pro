@@ -3,7 +3,7 @@ import validator from 'validator';
 import Inputmask from 'inputmask';
 
 const registerForm = document.querySelector('form');
-const localStorageKey = 'feedback-form-state';
+const localStorageKey = 'register-form-state';
 const savedLocalStorageKey = localStorage.getItem(localStorageKey);
 const register = JSON.parse(savedLocalStorageKey) ?? {};
 const userName = registerForm.elements.username;

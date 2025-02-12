@@ -12,7 +12,7 @@
     <title>Excel-pro</title>
     <script type="module" crossorigin src="/landing-excel-pro/index.js"></script>
     <link rel="modulepreload" crossorigin href="/landing-excel-pro/assets/vendor-BNDYmZVu.js">
-    <link rel="stylesheet" crossorigin href="/landing-excel-pro/assets/index-Cv2Mi-vw.css">
+    <link rel="stylesheet" crossorigin href="/landing-excel-pro/assets/index-DXq8_4ok.css">
   </head>
   <body>
     <header class="header" aria-label="navigation section">
@@ -142,6 +142,103 @@
 </section>
 
     </main>
+    <!-- Модальне вікно -->
+<div class="modal-overlay">
+  <div class="modal">
+    <svg class="logo-modal" width="100" height="30">
+      <use href="/landing-excel-pro/assets/icons-Cr9nnk0S.svg#icon-logo"></use>
+    </svg>
+    <button type="button" class="close-modal">
+      <svg class="close-icon" width="18" height="18">
+        <use href="/landing-excel-pro/assets/icons-Cr9nnk0S.svg#icon-close"></use>
+      </svg>
+    </button>
+    <h2 class="registration-box-title">Реєструйся просто зараз</h2>
+
+    <div class="timer">
+      <div class="field">
+        <span class="value" data-days>00</span>
+        <span class="label">днів</span>
+      </div>
+      <div class="field">
+        <span class="value" data-hours>00</span>
+        <span class="label">годин</span>
+      </div>
+      <div class="field">
+        <span class="value" data-minutes>00</span>
+        <span class="label">хвилин</span>
+      </div>
+      <div class="field">
+        <span class="value" data-seconds>00</span>
+        <span class="label">секунд</span>
+      </div>
+    </div>
+
+    <form class="registration-form" autocomplete="off" novalidate>
+      <div class="input-wrapper">
+        <div class="input-container">
+          <input
+            class="form-input"
+            type="text"
+            name="username"
+            placeholder="Введи своє ім'я"
+            required
+          />
+          <span class="error-message"></span>
+        </div>
+        <div class="input-container">
+          <input
+            class="form-input"
+            type="email"
+            name="email"
+            placeholder="Введи свій E-mail"
+            required
+          />
+          <span class="error-message"></span>
+        </div>
+
+        <div class="input-container">
+          <input
+            class="form-input tel-input"
+            type="tel"
+            name="phone"
+            placeholder="+380 (95) -- -- ---"
+            required
+          />
+          <span class="error-message"></span>
+          <svg class="form-icon-position" width="24" height="16">
+            <use href="/landing-excel-pro/assets/icons-Cr9nnk0S.svg#icon-flag"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div class="checkbox-container">
+        <input
+          class="visually-hidden"
+          type="checkbox"
+          name="userPrivacy"
+          value="true"
+          id="user-privacy"
+        />
+        <label class="checkbox-label" for="user-privacy">
+          <span class="custom-check-icon">
+            <svg class="check-icon-position" width="10" height="8">
+              <use href="/landing-excel-pro/assets/icons-Cr9nnk0S.svg#icon-checpoint"></use>
+            </svg>
+          </span>
+          <span class="checkbox-text">
+            Згоден з
+            <a class="policy-link" href="#">Політика конфіденційності</a> та
+            <a class="policy-link" href="#">Умови користування послугами</a>
+          </span>
+        </label>
+      </div>
+
+      <button class="register-btn" type="submit">Зареєструватися</button>
+    </form>
+  </div>
+</div>
+
 
   </body>
 </html>

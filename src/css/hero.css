@@ -211,6 +211,18 @@
   transform: translateY(-50%);
 }
 
+.error-message {
+  position: absolute;
+  color: red;
+  font-size: 12px;
+  display: none;
+  top: 46px;
+}
+
+.error-message.show {
+  display: block;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -225,6 +237,7 @@
 }
 
 .checkbox-container {
+  position: relative;
   margin-bottom: 32px;
 }
 

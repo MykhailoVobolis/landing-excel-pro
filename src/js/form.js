@@ -12,6 +12,8 @@ function initializeForm(formElement) {
   const userPhone = formElement.elements.phone;
   const userPrivacy = formElement.elements.userPrivacy;
 
+  const modalOverlay = document.querySelector('.modal-overlay');
+
   userName.value = register.name ?? '';
   userEmail.value = register.email ?? '';
   userPhone.value = register.phone ?? '';
@@ -87,6 +89,8 @@ function initializeForm(formElement) {
         // Тільки для демонстрації !!!
         localStorage.removeItem(localStorageKey);
         formElement.reset();
+      } finally {
+        modalOverlay.classList.remove('active');
       }
     }
   }

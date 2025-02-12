@@ -272,6 +272,7 @@
 .checkbox-text {
   font-size: 12px;
   line-height: 1.33;
+  cursor: pointer;
 }
 
 .custom-check-icon {

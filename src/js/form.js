@@ -2,107 +2,127 @@ import axios from 'axios';
 import validator from 'validator';
 import Inputmask from 'inputmask';
 
-const registerForm = document.querySelector('form');
-const localStorageKey = 'register-form-state';
-const savedLocalStorageKey = localStorage.getItem(localStorageKey);
-const register = JSON.parse(savedLocalStorageKey) ?? {};
-const userName = registerForm.elements.username;
-const userEmail = registerForm.elements.email;
-const userPhone = registerForm.elements.phone;
-const userPrivacy = registerForm.elements.userPrivacy;
+// Функція для ініціалізації форми
+function initializeForm(formElement) {
+  const localStorageKey = 'register-form-state';
+  const savedLocalStorageKey = localStorage.getItem(localStorageKey);
+  const register = JSON.parse(savedLocalStorageKey) ?? {};
+  const userName = formElement.elements.username;
+  const userEmail = formElement.elements.email;
+  const userPhone = formElement.elements.phone;
+  const userPrivacy = formElement.elements.userPrivacy;
 
-userName.value = register.name ?? '';
-userEmail.value = register.email ?? '';
-userPhone.value = register.phone ?? '';
+  userName.value = register.name ?? '';
+  userEmail.value = register.email ?? '';
+  userPhone.value = register.phone ?? '';
 
-registerForm.addEventListener('input', recordLocalStorage);
+  formElement.addEventListener('input', recordLocalStorage);
+  formElement.addEventListener('submit', sendingData);
 
-function recordLocalStorage(event) {
-  register.name = registerForm.elements.username.value.trim();
-  register.email = registerForm.elements.email.value.trim();
-  register.phone = registerForm.elements.phone.value.trim();
-  localStorage.setItem(localStorageKey, JSON.stringify(register));
-}
-
-registerForm.addEventListener('submit', sendingData);
-
-function setError(inputElement, message) {
-  const errorMessageElement = inputElement.nextElementSibling;
-  errorMessageElement.textContent = message;
-  errorMessageElement.classList.add('show');
-}
-
-function resetErrors() {
-  const inputs = registerForm.querySelectorAll('.form-input');
-  inputs.forEach(input => {
-    const errorMessageElement = input.nextElementSibling;
-    errorMessageElement.classList.remove('show');
-  });
-}
-
-const phoneInput = document.querySelector('input[name="phone"]');
-const im = new Inputmask('+380 (99) 999 99 99');
-im.mask(phoneInput);
-
-async function sendingData(event) {
-  event.preventDefault();
-
-  resetErrors();
-
-  let isValid = true;
-
-  if (!userName.value.trim()) {
-    setError(userName, "Це поле є обов'язковим");
-    isValid = false;
+  // Записуємо дані в LocalStorage при кожному введенні
+  function recordLocalStorage(event) {
+    register.name = formElement.elements.username.value.trim();
+    register.email = formElement.elements.email.value.trim();
+    register.phone = formElement.elements.phone.value.trim();
+    localStorage.setItem(localStorageKey, JSON.stringify(register));
   }
 
-  if (!userEmail.value.trim()) {
-    setError(userEmail, "Це поле є обов'язковим");
-    isValid = false;
-  } else if (!validator.isEmail(userEmail.value)) {
-    setError(userEmail, 'Невірний формат email');
-    isValid = false;
-  }
+  // Відправка даних форми
+  async function sendingData(event) {
+    event.preventDefault();
 
-  if (!userPhone.value.trim()) {
-    setError(userPhone, "Це поле є обов'язковим");
-    isValid = false;
-  } else if (
-    !validator.matches(userPhone.value, /^\+380 \(\d{2}\) \d{3} \d{2} \d{2}$/)
-  ) {
-    setError(userPhone, 'Невірний формат телефону');
-    isValid = false;
-  }
+    resetErrors();
 
-  if (!userPrivacy.checked) {
-    setError(userPrivacy, 'Потрібно погодитись з політикою конфіденційності');
-    isValid = false;
-  }
+    let isValid = true;
 
-  if (isValid) {
-    const formData = {
-      name: userName.value.trim(),
-      email: userEmail.value.trim(),
-      phone: userPhone.value.trim(),
-    };
+    if (!userName.value.trim()) {
+      setError(userName, "Це поле є обов'язковим");
+      isValid = false;
+    }
 
-    try {
-      // Надсилання POST-запиту на неіснуючий ендпоінт
-      const response = await axios.post(
-        'https://example.com/register',
-        formData
-      );
+    if (!userEmail.value.trim()) {
+      setError(userEmail, "Це поле є обов'язковим");
+      isValid = false;
+    } else if (!validator.isEmail(userEmail.value)) {
+      setError(userEmail, 'Невірний формат email');
+      isValid = false;
+    }
 
-      localStorage.removeItem(localStorageKey);
-      registerForm.reset();
+    if (!userPhone.value.trim()) {
+      setError(userPhone, "Це поле є обов'язковим");
+      isValid = false;
+    } else if (
+      !validator.matches(userPhone.value, /^\+380 \(\d{2}\) \d{3} \d{2} \d{2}$/)
+    ) {
+      setError(userPhone, 'Невірний формат телефону');
+      isValid = false;
+    }
 
-      alert('Дані форми успішно надіслані');
-    } catch (error) {
-      alert('Сталася помилка при відправленні даних форми');
+    if (!userPrivacy.checked) {
+      setError(userPrivacy, 'Потрібно погодитись з політикою конфіденційності');
+      isValid = false;
+    }
 
-      // Тільки для демонстрації !!!
-      localStorage.removeItem(localStorageKey);
-      registerForm.reset();
+    if (isValid) {
+      const formData = {
+        name: userName.value.trim(),
+        email: userEmail.value.trim(),
+        phone: userPhone.value.trim(),
+      };
+
+      try {
+        // Надсилання POST-запиту на неіснуючий ендпоінт
+        const response = await axios.post(
+          'https://example.com/register',
+          formData
+        );
+
+        localStorage.removeItem(localStorageKey);
+        formElement.reset();
+
+        alert('Дані форми успішно надіслані');
+      } catch (error) {
+        alert('Сталася помилка при відправленні даних форми');
+
+        // Тільки для демонстрації !!!
+        localStorage.removeItem(localStorageKey);
+        formElement.reset();
+      }
     }
   }
+
+  // Оновлення помилок
+  function setError(inputElement, message) {
+    const errorMessageElement = inputElement.nextElementSibling;
+    errorMessageElement.textContent = message;
+    errorMessageElement.classList.add('show');
+  }
+
+  // Скидання помилок
+  function resetErrors() {
+    const inputs = formElement.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+      const errorMessageElement = input.nextElementSibling;
+      errorMessageElement.classList.remove('show');
+    });
+  }
+
+  // Маска для телефону
+  const phoneInput = formElement.querySelector('input[name="phone"]');
+  const im = new Inputmask('+380 (99) 999 99 99');
+  im.mask(phoneInput);
 }
+
+// Ініціалізація форми для `hero` та модалки
+document.addEventListener('DOMContentLoaded', () => {
+  const heroForm = document.querySelector('.hero form');
+  const modalForm = document.querySelector('.modal form');
+
+  if (heroForm) {
+    initializeForm(heroForm);
+  }
+
+  if (modalForm) {
+    initializeForm(modalForm);
+  }
+});

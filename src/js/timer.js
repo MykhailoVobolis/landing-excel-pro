@@ -9,10 +9,11 @@ const modalMinuteScoreboard = document.querySelector('.modal [data-minutes]');
 const modalSecondScoreboard = document.querySelector('.modal [data-seconds]');
 
 const userSelectedDate = new Date('2025-03-01T00:00:00').getTime();
+
 let intervalTime;
 
 function startTimer() {
-  intervalTime = setInterval(() => {
+  function update() {
     const now = Date.now();
     const ms = userSelectedDate - now;
 
@@ -33,7 +34,13 @@ function startTimer() {
     const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
     updateTimer(days, hours, minutes, seconds);
-  }, 1000);
+  }
+
+  // Викликаємо оновлення відразу при старті
+  update();
+
+  // Запускаємо інтервал
+  intervalTime = setInterval(update, 1000);
 }
 
 // Оновлюємо таймер в обох місцях

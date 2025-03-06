@@ -8,7 +8,7 @@ const modalHourScoreboard = document.querySelector('.modal [data-hours]');
 const modalMinuteScoreboard = document.querySelector('.modal [data-minutes]');
 const modalSecondScoreboard = document.querySelector('.modal [data-seconds]');
 
-const userSelectedDate = new Date('2025-03-01T00:00:00').getTime();
+const userSelectedDate = new Date('2025-06-01T19:30:00').getTime();
 
 let intervalTime;
 
